@@ -1,4 +1,4 @@
-# CellAtlasAgent: A Modular LLM-Driven Framework for Autonomous Single-Cell RNA-seq Analysis and Cell Type Annotation
+# sc-atlas-agentic-builder: A Modular LLM-Driven Framework for Autonomous Single-Cell RNA-seq Analysis and Cell Type Annotation
 
 **Authors:** Yicheng Gao, Claude (Anthropic)
 
@@ -8,7 +8,7 @@
 
 ## Abstract
 
-Single-cell RNA sequencing (scRNA-seq) has transformed our understanding of cellular heterogeneity, yet its analysis pipelines remain labor-intensive, requiring expert decisions at each step — from quality control parameter tuning to cell type annotation. We present **CellAtlasAgent**, a modular framework that integrates large language models (LLMs) as autonomous decision-makers within a structured scRNA-seq analysis pipeline. The framework decomposes the analysis workflow into 16 atomic tools organized across six modules (preprocessing, integration, clustering, marker gene identification, annotation, and utility operations), each following a unified `ToolWrapper` interface. An LLM agent (Claude) orchestrates these tools via the tool_use API, making context-dependent decisions such as parameter selection, cell type identification from marker genes, and iterative refinement through subclustering. We demonstrate that this architecture enables end-to-end analysis from raw count matrices to annotated cell atlases, handling both single-sample and multi-batch datasets with different input formats. The separation of computational execution (tools) from biological reasoning (agent) creates a system that is both reproducible and adaptable, where domain expertise is encoded in the agent's reasoning rather than hardcoded heuristics.
+Single-cell RNA sequencing (scRNA-seq) has transformed our understanding of cellular heterogeneity, yet its analysis pipelines remain labor-intensive, requiring expert decisions at each step — from quality control parameter tuning to cell type annotation. We present **sc-atlas-agentic-builder**, a modular framework that integrates large language models (LLMs) as autonomous decision-makers within a structured scRNA-seq analysis pipeline. The framework decomposes the analysis workflow into 16 atomic tools organized across six modules (preprocessing, integration, clustering, marker gene identification, annotation, and utility operations), each following a unified `ToolWrapper` interface. An LLM agent (Claude) orchestrates these tools via the tool_use API, making context-dependent decisions such as parameter selection, cell type identification from marker genes, and iterative refinement through subclustering. We demonstrate that this architecture enables end-to-end analysis from raw count matrices to annotated cell atlases, handling both single-sample and multi-batch datasets with different input formats. The separation of computational execution (tools) from biological reasoning (agent) creates a system that is both reproducible and adaptable, where domain expertise is encoded in the agent's reasoning rather than hardcoded heuristics.
 
 ---
 
@@ -26,7 +26,7 @@ Large language models trained on scientific literature encode substantial biolog
 
 ### 1.3 Contribution
 
-We present CellAtlasAgent, a framework that operationalizes this insight through three design principles:
+We present sc-atlas-agentic-builder, a framework that operationalizes this insight through three design principles:
 
 1. **Tool atomicity**: Each computational step is encapsulated as an independent tool with a defined interface, enabling the agent to compose arbitrary workflows.
 2. **Agent-in-the-loop annotation**: Tools provide evidence (scores, statistics, marker genes); the agent makes biological decisions (cell type assignments, subclustering choices).
@@ -38,7 +38,7 @@ We present CellAtlasAgent, a framework that operationalizes this insight through
 
 ### 2.1 System Overview
 
-CellAtlasAgent consists of three layers:
+sc-atlas-agentic-builder consists of three layers:
 
 ```
 +-------------------------------------------------+
@@ -266,7 +266,7 @@ These are not theoretical concerns — a 100,000-cell dataset with 20,000 genes 
 
 ## 7. Conclusion
 
-CellAtlasAgent demonstrates that LLMs can serve as effective decision-makers in structured bioinformatics pipelines when given appropriate tool interfaces. By separating computational execution from biological reasoning, the framework achieves the reproducibility of scripted pipelines with the adaptability of expert analysis. The modular tool architecture enables incremental extension — adding new integration methods, annotation references, or quality metrics requires implementing a single `ToolWrapper` subclass without modifying the agent or executor logic. We believe this pattern — atomic tools orchestrated by LLM agents — is broadly applicable to computational biology workflows where domain expertise drives analytical decisions.
+sc-atlas-agentic-builder demonstrates that LLMs can serve as effective decision-makers in structured bioinformatics pipelines when given appropriate tool interfaces. By separating computational execution from biological reasoning, the framework achieves the reproducibility of scripted pipelines with the adaptability of expert analysis. The modular tool architecture enables incremental extension — adding new integration methods, annotation references, or quality metrics requires implementing a single `ToolWrapper` subclass without modifying the agent or executor logic. We believe this pattern — atomic tools orchestrated by LLM agents — is broadly applicable to computational biology workflows where domain expertise drives analytical decisions.
 
 ---
 
