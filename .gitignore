@@ -1,0 +1,5 @@
+*.h5ad
+*.png
+__pycache__/
+.claude/
+annotated_logs.json
