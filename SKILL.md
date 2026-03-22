@@ -242,6 +242,13 @@ Input: files (.h5ad, 10X .h5, MTX dir, CSV/TSV, loom)
   v
 [AnnotateCellTypesTool] LLM assigns cell type labels
   |
+  v
+[ReflectAnnotationTool] gather evidence for self-critique:
+  |                      per-cluster markers vs labels,
+  |                      cross-cluster marker overlaps,
+  |                      cell proportions per label
+  |                      → LLM reviews: accept / revise / subcluster / merge
+  |
   v  (if low-confidence clusters)
 [SubclusterTool] -> [AnnotateSubclustersTool] iterative refinement
   |
@@ -281,6 +288,7 @@ sc_atlas_agentic_builder/
     annotate_subclusters_tool.py # AnnotateSubclustersTool
     merge_clusters_tool.py     #   MergeClustersTool
     harmonize_labels_tool.py   #   HarmonizeLabelsTool
+    reflect_annotation_tool.py #   ReflectAnnotationTool — evidence for self-critique
   demo/                        # Runner + test data
     run_with_claude.py         #   Agent loop, executor, tool definitions
     create_demo_data.py        #   Synthetic PBMC dataset generator

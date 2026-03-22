@@ -473,6 +473,33 @@ TOOLS = [
             "required": ["batch_value", "label_mapping"],
         },
     },
+    {
+        "name": "reflect_annotation",
+        "description": (
+            "Gather structured evidence for self-critique of cell type "
+            "annotations. Returns per-cluster summary (label, cell count, "
+            "top markers, confidence), per-label proportions, and "
+            "cross-cluster marker overlaps. Use AFTER annotate_cell_types "
+            "to review your decisions before finalizing. The evidence is "
+            "raw facts — you decide whether to revise, subcluster, merge, "
+            "or accept."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "label_key": {
+                    "type": "string",
+                    "description": "Obs column with annotations to review",
+                    "default": "cell_type",
+                },
+                "n_top_markers": {
+                    "type": "integer",
+                    "description": "Top marker genes to show per cluster",
+                    "default": 8,
+                },
+            },
+        },
+    },
 ]
 
 
@@ -507,6 +534,7 @@ class PipelineExecutor:
             AnnotateSubclustersTool,
             MergeClustersTool,
             HarmonizeLabelsTool,
+            ReflectAnnotationTool,
         )
 
         self.prepare_data = PrepareDataTool()
@@ -524,6 +552,7 @@ class PipelineExecutor:
         self.annotate_subclusters = AnnotateSubclustersTool()
         self.merge_clusters = MergeClustersTool()
         self.harmonize_labels = HarmonizeLabelsTool()
+        self.reflect_annotation = ReflectAnnotationTool()
 
     def execute(self, tool_name: str, tool_input: dict) -> str:
         """Execute a tool call and return JSON result string."""
@@ -706,6 +735,18 @@ class PipelineExecutor:
                     "fine": stats.get("fine"),
                     "per_batch_labels_after": stats.get("per_batch_labels_after"),
                 })
+
+            elif tool_name == "reflect_annotation":
+                self.adata, stats = self.reflect_annotation.run(
+                    self.adata, params=tool_input,
+                )
+                return json.dumps({
+                    "status": "success",
+                    "summary": stats.get("summary"),
+                    "per_cluster": stats.get("per_cluster"),
+                    "per_label": stats.get("per_label"),
+                    "marker_overlaps": stats.get("marker_overlaps"),
+                }, default=str)
 
             elif tool_name == "annotate_batch":
                 batch_value = str(tool_input["batch_value"])
@@ -921,9 +962,18 @@ def run_agent_loop(
         "6. Build a marker_dict from canonical markers and call score_markers\n"
         "7. Call check_confidence to identify ambiguous clusters\n"
         "8. Call annotate_cell_types with label_mapping and fine_label_mapping\n"
-        "9. If any cluster has confidence < 0.5: call subcluster, review "
+        "9. Call reflect_annotation to review your annotations. It shows "
+        "per-cluster markers alongside your labels, cross-cluster marker "
+        "overlaps, and cell proportions. Read the evidence and decide:\n"
+        "   - Are any labels inconsistent with the markers?\n"
+        "   - Do any clusters share too many markers and should be merged?\n"
+        "   - Are any proportions surprising for this tissue type?\n"
+        "   - Are any expected cell types missing?\n"
+        "   If issues found: revise with annotate_cell_types, subcluster, "
+        "or merge_clusters. Then reflect again (max 2 reflection rounds).\n"
+        "10. If any cluster has confidence < 0.5: call subcluster, review "
         "sub-markers, then call annotate_subclusters\n"
-        "10. If two clusters are the same cell type: call merge_clusters\n\n"
+        "11. If two clusters are the same cell type: call merge_clusters\n\n"
         "--- NOTES ---\n"
         "- For single-batch data: skip steps 2-3, go directly to step 4.\n"
         "- Adapt parameters based on dataset size and results.\n"
