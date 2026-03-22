@@ -1,4 +1,4 @@
-# CellAtlasAgent: LLM-Driven Single-Cell RNA-seq Analysis Pipeline
+# sc-atlas-agentic-builder: Agentic Single-Cell Atlas Construction
 
 ## Overview
 
