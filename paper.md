@@ -9,7 +9,7 @@ tags:
   - bioinformatics-pipeline
   - autonomous-analysis
 human_names:
-  - Yicheng Gao
+  - Yicheng Gao, Yuheng Zhao, Fabian J. Theis
 skill_md: "SKILL.md"
 ---
 
