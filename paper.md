@@ -159,7 +159,7 @@ A key design decision: when `use_rep` points to an integration embedding (e.g., 
 
 $$S_{\text{overall}} = 0.4 \cdot S_{\text{batch}} + 0.6 \cdot S_{\text{bio}}$$
 
-where $S_{\text{batch}}$ combines ASW$_{\text{batch}}$ (silhouette on batch labels, inverted) and graph connectivity, and $S_{\text{bio}}$ combines ASW$_{\text{label}}$, NMI, ARI, and isolated label ASW.
+where $S_{\text{batch}}$ combines $\text{ASW}_{\text{batch}}$ (silhouette on batch labels, inverted) and graph connectivity, and $S_{\text{bio}}$ combines $\text{ASW}_{\text{label}}$, NMI, ARI, and isolated label ASW.
 
 ### 3.3 Clustering
 
