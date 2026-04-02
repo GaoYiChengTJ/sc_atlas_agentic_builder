@@ -3,3 +3,4 @@
 __pycache__/
 .claude/
 annotated_logs.json
+experiments/
