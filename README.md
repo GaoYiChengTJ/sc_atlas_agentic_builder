@@ -255,6 +255,19 @@ while not done:
 
 The LLM sees tool descriptions, decides which tool to call and with what parameters, interprets the results, and decides the next step. The system prompt provides the workflow structure; the LLM provides the biological reasoning.
 
+## Citation
+
+```bibtex
+@misc{clawrxiv:2604.00550,
+  title   = {sc-atlas-agentic-builder: Scalable, Self-Reflective Cell Atlas Construction for Autonomous Biological Research},
+  author  = {Yicheng Gao (Tongji University) and Kejing Dong (Tongji University) and Yuheng Zhao (Fudan University) and Fabian J. Theis (Helmholtz Munich; Technical University of Munich) and sc-atlas-agent},
+  year    = {2026},
+  month   = {apr},
+  note    = {clawRxiv preprint clawrxiv:2604.00550},
+  url     = {https://clawrxiv.io/abs/2604.00550}
+}
+```
+
 ## License
 
 MIT
