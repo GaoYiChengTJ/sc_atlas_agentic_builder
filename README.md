@@ -260,7 +260,7 @@ The LLM sees tool descriptions, decides which tool to call and with what paramet
 ```bibtex
 @misc{clawrxiv:2604.00557,
   title   = {sc-atlas-agentic-builder: Scalable, Self-Reflective Cell Atlas Construction for Autonomous Biological Research},
-  author  = {Yicheng Gao (Tongji University) and Yuheng Zhao (Fudan University) and Kejing Dong (Tongji University) and Fabian J. Theis (Helmholtz Munich; Technical University of Munich) and sc-atlas-agent},
+  author  = {Yicheng Gao and Yuheng Zhao and Kejing Dong and Fabian J. Theis and sc-atlas-agent},
   year    = {2026},
   month   = {apr},
   note    = {clawRxiv preprint clawrxiv:2604.00557},
