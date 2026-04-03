@@ -61,40 +61,26 @@ Output: annotated.h5ad + logs.json
 ### Installation
 
 ```bash
-# Core dependencies
-pip install \
-  scanpy>=1.10 \
-  anndata>=0.10 \
-  numpy>=1.24 \
-  scipy>=1.11 \
-  pandas>=2.0 \
-  scikit-learn>=1.3 \
-  leidenalg>=0.10 \
-  python-igraph>=0.11
-
-# Integration
-pip install \
-  harmonypy>=0.2 \
-  scanorama>=1.7
-
-# Evaluation
-pip install scib-metrics>=0.5
-
-# LLM API client (one of)
-pip install openai>=1.0    # for OpenAI-compatible endpoints
-pip install anthropic>=0.30 # for Anthropic native API
-
-# Optional
-pip install celltypist        # reference-based annotation
-pip install doubletdetection   # alternative doublet detection
+git clone https://github.com/GaoYiChengTJ/sc_atlas_agentic_builder
+cd sc_atlas_agentic_builder
+pip install -e ".[all]"
 ```
 
 **Python >= 3.10 required.**
 
+Or install dependencies selectively:
+
+```bash
+pip install -e .                    # core only
+pip install -e ".[integration]"     # + Harmony, Scanorama
+pip install -e ".[evaluation]"      # + scib-metrics
+pip install -e ".[llm]"             # + OpenAI/Anthropic clients
+pip install -e ".[all]"             # everything including optional
+```
+
 ### Run with demo data
 
 ```bash
-cd sc_atlas_agentic_builder
 python -m demo.run_with_claude \
   --api-base <YOUR_API_BASE> \
   --api-key <YOUR_API_KEY>
@@ -115,6 +101,17 @@ python -m demo.run_with_claude \
   --input sample1.h5ad sample2.h5ad sample3.h5ad \
   --batch-key batch
 ```
+
+### Using as a Claude Code skill
+
+After cloning, the skill is automatically available when you open the project in Claude Code (the `.claude/skills/` directory is included in the repository). You can also copy the skill to any other Claude Code project:
+
+```bash
+mkdir -p /path/to/your/project/.claude/skills/sc-atlas-agentic-builder
+cp SKILL.md /path/to/your/project/.claude/skills/sc-atlas-agentic-builder/SKILL.md
+```
+
+Then ask Claude Code: *"analyze my scRNA-seq data at /path/to/data.h5ad"* and the `sc-atlas-agentic-builder` skill will drive the full pipeline.
 
 ## Key features
 

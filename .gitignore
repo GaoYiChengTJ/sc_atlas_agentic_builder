@@ -1,6 +1,9 @@
 *.h5ad
 *.png
 __pycache__/
-.claude/
+.claude/settings*.json
 annotated_logs.json
 experiments/
+*.egg-info/
+dist/
+build/
